@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 회원정보 처리 SQL -->
+<mapper namespace="com.lecodi.foru.mapper.MemberMapper">
+	
+	<!-- 회원 가입 처리 -->
+	<insert id="insertMember" parameterType="member">
+		insert into
+			tbl_member(
+				userid
+				,password
+				,name
+				,birth
+				,phonenumber1
+				,phonenumber2
+				,phonenumber3
+				,postcode
+				,address_primary
+				,address_detail
+				,email_id
+				,email_domain	
+			)values(
+				#{userid}
+				,#{password}
+				,#{name}
+				,#{birth}
+				,#{phonenumber1}
+				,#{phonenumber2}
+				,#{phonenumber3}
+				,#{postcode}
+				,#{address_primary}
+				,#{address_detail}
+				,#{email_id}
+				,#{email_domain}	
+			)
+	</insert>
+	
+	<!-- 아이디 중복확인 -->
+	<select id="checkDuplicate" resultType="member" parameterType="String">
+		select 
+			* from tbl_member
+		where 
+			userid = #{userid}
+	</select>
+	
+	<!-- 이메일 인증 -->
+	<update id="verifyMember">
+		update 
+			tbl_member 
+		set 
+			m_verify='y' 
+		where 
+			userid=#{userid}
+		<!-- 	email_id=#{email_id} 
+		and email_domain=#{email_domain} 기존의 이메일주소를 이용한 방법은 프라이머리키가 아니라 아이디로 바꿔줌 -->
+	</update>
+		
+	<!-- 회원 정보 수정 -->	
+	<update id="updateMember" parameterType="Member">
+		update 
+			tbl_member
+		set
+			password=#{password}
+			,birth=#{birth}
+			,phonenumber1=#{phonenumber1}
+			,phonenumber2=#{phonenumber2}
+			,phonenumber3=#{phonenumber3}
+			,postcode=#{postcode}
+			,address_primary=#{address_primary}
+			,address_detail=#{address_detail}
+			,email_id=#{email_id}
+			,email_domain=#{email_domain}
+		where
+			userid=#{userid}	
+	</update>
+	
+	<select id="getMember" parameterType="string" resultType="member">
+		select 
+			* from tbl_member
+		where 
+			userid=#{userid} 
+			<!--  
+			and password=#{password}
+			-->
+	</select>
+	
+	
+	<!-- 탈퇴 이력 확인 -->
+	<select id="checkStatus" parameterType="String" resultType="String">
+		select status from tbl_member where userid = #{userid}
+	</select>
+	
+	
+	<!-- 로그인 -->
+	<select id="login" parameterType="String" resultType="String">
+		select 
+			password 
+		from 
+			tbl_member 
+		where 
+			userid = #{userid}
+	</select>
+   
+</mapper>

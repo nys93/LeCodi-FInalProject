@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.lecodi.foru.mapper.CartMapper">
+
+	<insert id="addCart" parameterType="cart">
+      insert into cart (userid, productcode, cartmount, color, c_size, cartnum, productname,price)
+      values (#{userid}, #{productcode}, #{cartmount}, #{color}, #{c_size}, cart_seq.nextval, #{productname},#{price})
+   </insert>
+
+	<select id="getList" parameterType="String" resultType="cart">
+		select TO_CHAR(cartdate, 'YYYYMMDD') as cartdate, userid, productcode, cartmount, color, c_size, productname, price
+		from cart where userid = #{userid}
+	</select>
+	
+	<delete id="emptyCart" parameterType="String">
+		delete from cart where userid = #{userid}
+	</delete>
+	
+	<delete id="deleteCart" parameterType="cart">
+		delete from cart where userid = #{userid} and productcode = #{productcode}
+	</delete>
+</mapper>

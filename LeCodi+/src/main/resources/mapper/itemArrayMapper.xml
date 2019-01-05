@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- image 처리 -->
+<mapper namespace="com.lecodi.foru.mapper.ItemArrayMapper">
+
+		<select id="getMaxCodinum" resultType="int">
+			select nvl(max(codiname), 0) from ITEMARRAY
+		</select>
+
+ 	<!-- 이미지 position 갖고오기 -->
+	<insert id="insertImagePosition" parameterType="itemarray">
+		insert into ITEMARRAY values (
+		 		 #{src},
+    			#{height},
+    			#{width},
+    			#{top},
+    			#{leftitem},
+    			#{userid}, 
+    			#{codiname}     
+		)
+	</insert> 
+	 
+	
+</mapper>

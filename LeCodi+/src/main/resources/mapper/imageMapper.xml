@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 이미지 처리 SQL -->
+<mapper namespace="com.lecodi.foru.mapper.ImageMapper">
+
+	<!-- 이미지 저장 -->
+	<insert id="saveImage" parameterType="Map">
+		INSERT INTO img_table (id, userid, img_path) VALUES(id_seq.nextval, #{userid}, #{img_path})
+	</insert>
+	
+	<!-- 최근 저장된 이미지 번호 출력 -->
+	<select id="getMax" resultType="int">
+		select max(id) from img_table
+	</select>
+	
+	<update id="saveCate" parameterType="image">
+		update img_table set cloth_category = #{cloth_category} where id = #{id}
+	</update>
+
+	<!-- 이미지 출력 -->
+	<select id="getByteImage" resultType="Map" parameterType="String">
+		SELECT id, img_path FROM img_table where id = #{id}
+	</select>
+
+<select id="selectAllImages" resultType="Map" parameterType="String"> 
+		SELECT id, userid, img_path FROM img_table where userid = #{userid} </select> 
+		
+	<!-- <select id="selectAllImages" resultType="Image" parameterType="String">
+		SELECT ID,USERID, DBMS_LOB.SUBSTR(IMG_FILE, 1000) FROM IMG_TABLE WHERE USERID = #{userid} 
+	</select>-->
+
+
+</mapper>

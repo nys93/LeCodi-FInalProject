@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 제품 상세페이지 -->
+<mapper namespace="com.lecodi.foru.mapper.ProductMapper">
+
+	<!-- 상품 등록 -->
+	<insert id="insert" parameterType="Product">
+		insert into product (
+			productcode
+			,productamount
+			,price
+			,cloth_category
+			,discountrate
+			,cloth_size
+			,color
+			,productname
+			,imageaddress1
+			,imageaddress2
+			,imageaddress3
+			,imageaddress4
+			,imageaddress5
+		) values (
+			productnum_seq.nextval
+			,#{productamount}
+			,#{price}
+			,#{cloth_category}
+			,#{discountrate}
+			,#{cloth_size}
+			,#{color}
+			,#{productname}
+			,#{imageaddress1}
+			,#{imageaddress2}
+			,#{imageaddress3}
+			,#{imageaddress4}
+			,#{imageaddress5}
+		)
+	</insert>
+
+	<!-- 제품정보 겟 -->
+	<select id="getProductInfo" parameterType="Int" resultType="Product">
+		SELECT 
+		    productamount
+		    ,price
+		    ,cloth_category
+		    ,manufaturedDate
+		    ,discountrate
+		    ,cloth_size
+		    ,color
+		    ,productname
+		    ,imageaddress1
+		    ,imageaddress2
+		    ,imageaddress3
+		    ,imageaddress4
+		    ,imageaddress5
+		from product
+		where productcode=#{productcode}
+		
+	</select>
+	
+	<!-- 추천 -->
+	<select id="recomm" parameterType="String" resultType="HashMap">
+		  select decode(s.no,1,'tophandlebag',2,'tshirt',3,'jewelry'
+		  					,4,'boots',5,'sunglasses',6,'jeans',7,'sweater'
+		  					,8,'tanktop',9,'skirt',10,'sandals',11,'leggings'
+		  					,12,'buttondownshirt',13,'pantscasual'
+		  					,14,'heelspumpsorwedges',15,'lingerie',16,'blouse'
+		  					,17,'lightweightjacket',18,'casualdress'
+		  					,19,'winterjacket',20,'formaldress',21,'watches'
+		  					,22,'hat',23,'vest',24,'sneakers',25,'shoulderbag'
+		  					,26,'flats',27,'overall',28,'sweatpants'
+		  					,29,'shorts',30,'rompers',31,'pantssuitformal'
+		  					,32,'glasses',33,'clutches',34,'socks'
+		  					,35,'backpackormessengerbag',36,'jumpsuit'
+		  					,37,'runningshoes',38,'blazer',39,'tunic'
+		  					,40,'hosiery',41,'denimjacket',42,'belts'
+		  					,43,'leatherjacket',44,'trenchcoat',45,'headwrap'
+		  					,46,'sweaterdress',47,'sweatshirt',48,'gloves'
+		  					,49,'underwear',50,'swimsuits',51,'scarvesorwraps') as item,
+       			 decode(s.no,1,(select count(tophandlebag) from ${value} where tophandlebag = 1),
+                   			 2,(select count(tshirt) from ${value} where tshirt = 1),
+                   			 3,(select count(jewelry) from ${value} where jewelry = 1),
+                   			 4,(select count(boots) from ${value} where boots = 1),
+                   			 5,(select count(sunglasses) from ${value} where sunglasses = 1),
+                   			 6,(select count(jeans) from ${value} where jeans = 1),
+                   			 7,(select count(sweater) from ${value} where sweater = 1),
+                   			 8,(select count(tanktop) from ${value} where tanktop = 1),
+                   			 9,(select count(skirt) from ${value} where skirt = 1),
+                   			 10,(select count(sandals) from ${value} where sandals = 1),
+                   			 11,(select count(leggings) from ${value} where leggings = 1),
+                   			 12,(select count(buttondownshirt) from ${value} where buttondownshirt = 1),
+                   			 13,(select count(pantscasual) from ${value} where pantscasual = 1),
+                   			 14,(select count(heelspumpsorwedges) from ${value} where heelspumpsorwedges = 1),
+                   			 15,(select count(lingerie) from ${value} where lingerie = 1),
+                   			 16,(select count(blouse) from ${value} where blouse = 1),
+                   			 17,(select count(lightweightjacket) from ${value} where lightweightjacket = 1),
+                   			 18,(select count(casualdress) from ${value} where casualdress = 1),
+                   			 19,(select count(winterjacket) from ${value} where winterjacket = 1),
+                   			 20,(select count(formaldress) from ${value} where formaldress = 1),
+                   			 21,(select count(watches) from ${value} where watches = 1),
+                   			 22,(select count(hat) from ${value} where hat = 1),
+                   			 23,(select count(vest) from ${value} where vest = 1),
+                   			 24,(select count(sneakers) from ${value} where sneakers = 1),
+                   			 25,(select count(shoulderbag) from ${value} where shoulderbag = 1),
+                   			 26,(select count(flats) from ${value} where flats = 1),
+                   			 27,(select count(overall) from ${value} where overall = 1),
+                   			 28,(select count(sweatpants) from ${value} where sweatpants = 1),
+                   			 29,(select count(shorts) from ${value} where shorts = 1),
+                   			 30,(select count(rompers) from ${value} where rompers = 1),
+                   			 31,(select count(pantssuitformal) from ${value} where pantssuitformal = 1),
+                   			 32,(select count(glasses) from ${value} where glasses = 1),
+                   			 33,(select count(clutches) from ${value} where clutches = 1),
+                   			 34,(select count(socks) from ${value} where socks = 1),
+                   			 35,(select count(backpackormessengerbag) from ${value} where backpackormessengerbag = 1),
+                   			 36,(select count(jumpsuit) from ${value} where jumpsuit = 1),
+                   			 37,(select count(runningshoes) from ${value} where runningshoes = 1),
+                   			 38,(select count(blazer) from ${value} where blazer = 1),
+                   			 39,(select count(tunic) from ${value} where tunic = 1),
+                   			 40,(select count(hosiery) from ${value} where hosiery = 1),
+                   			 41,(select count(denimjacket) from ${value} where denimjacket = 1),
+                   			 42,(select count(belts) from ${value} where belts = 1),
+                   			 43,(select count(leatherjacket) from ${value} where leatherjacket = 1),
+                   			 44,(select count(trenchcoat) from ${value} where trenchcoat = 1),
+                   			 45,(select count(headwrap) from ${value} where headwrap = 1),
+                   			 46,(select count(sweaterdress) from ${value} where sweaterdress = 1),
+                   			 47,(select count(sweatshirt) from ${value} where sweatshirt = 1),
+                   			 48,(select count(gloves) from ${value} where gloves = 1),
+                   			 49,(select count(underwear) from ${value} where underwear = 1),
+                   			 50,(select count(swimsuits) from ${value} where swimsuits = 1),
+                   			 51,(select count(scarvesorwraps) from ${value} where scarvesorwraps = 1)) as value
+		  from (select level no from dual connect by level <![CDATA[<= 5]]>) s, 
+			   (select count(tophandlebag) from ${value} a),
+			   (select count(tshirt) from ${value}),
+			   (select count(jewelry) from ${value}),
+			   (select count(boots) from ${value}),
+			   (select count(sunglasses) from ${value}),
+			   (select count(jeans) from ${value}),
+			   (select count(sweater) from ${value}),
+			   (select count(tanktop) from ${value}),
+			   (select count(skirt) from ${value}),
+			   (select count(sandals) from ${value}),
+			   (select count(leggings) from ${value}),
+			   (select count(buttondownshirt) from ${value}),
+			   (select count(pantscasual) from ${value}),
+			   (select count(heelspumpsorwedges) from ${value}),
+			   (select count(lingerie) from ${value}),
+			   (select count(blouse) from ${value}),
+			   (select count(lightweightjacket) from ${value}),
+			   (select count(casualdress) from ${value}),
+			   (select count(winterjacket) from ${value}),
+			   (select count(formaldress) from ${value}),
+			   (select count(watches) from ${value}),
+			   (select count(hat) from ${value}),
+			   (select count(vest) from ${value}),
+			   (select count(sneakers) from ${value}),
+			   (select count(shoulderbag) from ${value}),
+			   (select count(flats) from ${value}),
+			   (select count(overall) from ${value}),
+			   (select count(sweatpants) from ${value}),
+			   (select count(shorts) from ${value}),
+			   (select count(rompers) from ${value}),
+			   (select count(pantssuitformal) from ${value}),
+			   (select count(glasses) from ${value}),
+			   (select count(clutches) from ${value}),
+			   (select count(socks) from ${value}),
+			   (select count(backpackormessengerbag) from ${value}),
+			   (select count(jumpsuit) from ${value}),
+			   (select count(runningshoes) from ${value}),
+			   (select count(blazer) from ${value}),
+			   (select count(tunic) from ${value}),
+			   (select count(hosiery) from ${value}),
+			   (select count(denimjacket) from ${value}),
+			   (select count(belts) from ${value}),
+			   (select count(leatherjacket) from ${value}),
+			   (select count(trenchcoat) from ${value}),
+			   (select count(headwrap) from ${value}),
+			   (select count(sweaterdress) from ${value}),
+			   (select count(sweatshirt) from ${value}),
+			   (select count(gloves) from ${value}),
+			   (select count(underwear) from ${value}),
+			   (select count(swimsuits) from ${value}),
+			   (select count(scarvesorwraps) from ${value})
+				order by value desc
+	</select>
+
+	<!-- 추천 사진 -->
+	<select id="recommCloth" parameterType="String" resultType="String">
+	  	select imageaddress1
+	  	from product
+	  	where cloth_category=#{value}
+	</select>
+	
+	<!-- 추가 -->
+	<select id="getList" resultType="product">
+		select * from product
+	</select>
+	<!-- 끝 -->
+	
+	<!-- 모든 옷 보여주기 (메인) -->
+	<select id="searchAll" resultType="product" >
+		select 
+			productcode
+			,productamount
+			,price	
+			,cloth_category
+			,manufaturedDate	
+			,discountrate	
+			,cloth_size		
+			,color		
+			,imageaddress1
+			,imageaddress2
+			,imageaddress3
+			,imageaddress4
+			,imageaddress5
+			,productname
+		from product
+	</select>
+	
+	<!-- 검색으로 옷 셀랙트 (메인) -->
+	<select id="selectProduct" resultType="Product" parameterType="hashMap" >
+		select 
+			productcode
+			,productamount
+			,price	
+			,cloth_category
+			,manufaturedDate	
+			,discountrate	
+			,cloth_size		
+			,color		
+			,imageaddress1
+			,imageaddress2
+			,imageaddress3
+			,imageaddress4
+			,imageaddress5
+			,productname
+		from product
+		
+		where
+		<if test="price=='noprice'">
+			0&lt;price and
+			price&lt;99999999
+		</if>
+		<if test="price=='priceOne'">
+			0&lt;price and
+			price&lt;10001
+		</if>
+		<if test="price=='priceTwo'">
+			9999&lt;price and
+			price&lt;20001
+		</if>
+		<if test='price=="priceThree"'>
+			19999&lt;price and
+			price&lt;40001
+		</if>
+		<if test="price=='priceFour'">
+			39999&lt;price
+		</if>
+    	
+    	<if test="x!=null">	
+		and
+		</if>
+		
+    	<if test="x!=null">	
+		   	<foreach collection="x" item="type" open="(" close=")" separator="or">
+           	cloth_category = #{type} or color = #{type}
+       		</foreach>
+        </if>
+	</select>
+	
+	<!-- 총 상품 개수 -->
+	<select id="totalCount" resultType="int">
+		select count(*) from product
+	</select>
+	
+</mapper>

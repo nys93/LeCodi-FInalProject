@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 회원정보 처리 SQL -->
+<mapper namespace="com.lecodi.foru.mapper.OrderMapper">
+	
+	<!-- 회원 가입 처리 -->
+	<insert id="insertOrder" parameterType="order">
+		insert into
+			tbl_order(
+				ordernumber
+   				,userid
+  				,postcode
+    			,address_primary
+    			,address_detail
+			    ,phonenumber1
+			    ,phonenumber2
+			    ,phonenumber3
+			    ,extrarequest
+			    ,productname1
+			    ,productname2
+			    ,productname3
+			    ,productname4
+			    ,productname5
+			    ,productcode1
+			    ,productcode2
+			    ,productcode3
+			    ,productcode4
+			    ,productcode5
+			    ,price1
+			    ,price2
+			    ,price3
+			    ,price4
+			    ,price5
+			    ,c_size1
+			   	,c_size2
+			   	,c_size3
+			   	,c_size4
+			   	,c_size5
+			    ,color1
+			    ,color2
+			    ,color3
+			    ,color4
+			    ,color5
+			    ,mount1
+			    ,mount2
+			    ,mount3
+			    ,mount4
+			    ,mount5
+			    
+			)values(
+				seq_order.nextval
+				,#{userid}
+				,#{postcode}
+				,#{address_primary}
+				,#{address_detail}
+				,#{phonenumber1}
+				,#{phonenumber2}
+				,#{phonenumber3}
+				,#{extrarequest}
+				,#{productname1, jdbcType=VARCHAR}
+				,#{productname2, jdbcType=VARCHAR}
+				,#{productname3, jdbcType=VARCHAR}
+				,#{productname4, jdbcType=VARCHAR}
+				,#{productname5, jdbcType=VARCHAR}
+				,#{productcode1, jdbcType=INTEGER}
+				,#{productcode2, jdbcType=INTEGER}
+				,#{productcode3, jdbcType=INTEGER}
+				,#{productcode4, jdbcType=INTEGER}
+				,#{productcode5, jdbcType=INTEGER}
+				,#{price1, jdbcType=INTEGER}
+				,#{price2, jdbcType=INTEGER}
+				,#{price3, jdbcType=INTEGER}
+				,#{price4, jdbcType=INTEGER}
+				,#{price5, jdbcType=INTEGER}	
+				,#{c_size1, jdbcType=VARCHAR}	
+				,#{c_size2, jdbcType=VARCHAR}	
+				,#{c_size3, jdbcType=VARCHAR}	
+				,#{c_size4, jdbcType=VARCHAR}	
+				,#{c_size5, jdbcType=VARCHAR}	
+				,#{color1, jdbcType=VARCHAR}	
+				,#{color2, jdbcType=VARCHAR}
+				,#{color3, jdbcType=VARCHAR}
+				,#{color4, jdbcType=VARCHAR}
+				,#{color5, jdbcType=VARCHAR}
+				,#{mount1, jdbcType=INTEGER}
+				,#{mount2, jdbcType=INTEGER}
+				,#{mount3, jdbcType=INTEGER}
+				,#{mount4, jdbcType=INTEGER}
+				,#{mount5, jdbcType=INTEGER}
+			)
+	</insert>
+	
+	<!-- 오더리스트 불러오기 -->
+	<select id="getOrderList" resultType="order" parameterType="String">
+		select 
+			ordernumber
+  			,userid
+ 			,postcode
+   			,address_primary
+   			,address_detail
+		    ,phonenumber1
+		    ,phonenumber2
+		    ,phonenumber3
+		    ,extrarequest
+		    ,productname1
+		    ,productname2
+		    ,productname3
+		    ,productname4
+		    ,productname5
+		    ,productcode1
+		    ,productcode2
+		    ,productcode3
+		    ,productcode4
+		    ,productcode5
+		    ,price1
+		    ,price2
+		    ,price3
+		    ,price4
+		    ,price5
+		    ,c_size1
+		   	,c_size2
+		   	,c_size3
+		   	,c_size4
+		   	,c_size5
+		    ,color1
+		    ,color2
+		    ,color3
+		    ,color4
+		    ,color5
+		    ,mount1
+		    ,mount2
+		    ,mount3
+		    ,mount4
+		    ,mount5
+			,to_char(orderdate, 'YYYY-MM-DD') orderdate
+			from tbl_order
+		where 
+			userid = #{userid}
+			
+	</select>
+
+</mapper>

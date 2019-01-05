@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 글 처리 SQL -->
+<mapper namespace="com.lecodi.foru.mapper.BoardMapper">
+
+	<!-- 문의글 저장 -->
+	<insert id="writeQ" parameterType="board">
+		insert into qna(title, context, userid, boardnum) values (#{title}, #{context}, #{userid}, seq_qna.nextval)
+	</insert>
+	
+	<!-- 공지사항 리스트 가져오기 -->
+	<select id="getList" resultType="board">
+		select * from notice
+	</select>
+	
+	<!-- 내 문의내역 리스트 가져오기 -->
+	<select id="getMyList" resultType="board" parameterType="String">
+		select title, context, boardnum, TO_CHAR(inputdate, 'YYYY/MM/DD') as inputdate from qna where userid = #{userid} order by inputdate desc
+	</select>
+	
+	<!-- 작성자 아이디 확인 -->
+	<select id="getId" resultType="String" parameterType="int">
+		select userid from qna where boardnum = #{boardnum}
+	</select>
+	
+	<!-- 작성글 가져오기 -->
+	<select id="getBoard" resultType="board" parameterType="int">
+		select title, context, userid, boardnum, TO_CHAR(inputdate, 'YYYY/MM/DD HH:mm') as inputdate from qna where boardnum = #{boardnum}
+	</select>
+	
+	<!-- 관리자 QNA 리스트 -->
+	<select id="getQnaList" resultType="board">
+		select * from qna order by inputdate desc
+	</select>
+	
+	<!-- 전체 글 수 반환 -->
+	<select id="totalCount" resultType="int">
+		select count(*) from qna
+	</select>
+	
+	<!-- 댓글 쓰기 -->
+	<insert id="writeR" parameterType="reply">
+		insert into reply (userid, context, boardnum, replynum) values (#{userid}, #{context}, #{boardnum}, seq_reply.nextval)
+	</insert>
+	
+	<!-- 댓글 불러오기 -->
+	<select id="getReply" parameterType="int" resultType="reply">
+		select * from reply where boardnum = #{boardnum}
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReply" parameterType="int">
+		delete from reply where replynum = #{replynum}
+	</delete>
+	
+</mapper>

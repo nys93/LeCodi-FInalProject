@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- image 처리 -->
+<mapper namespace="com.lecodi.foru.mapper.CodiTableMapper">
+
+		<select id="getMaxCodinum" resultType="int">
+			select nvl(max(codiname), 0) from CODITABLE
+		</select>
+
+ 	<!-- 이미지 position 갖고오기 -->
+	<insert id="insertImagePosition" parameterType="CodiTable">
+		insert into CODITABLE values (
+		 		 #{src},
+    			#{height},
+    			#{width},
+    			#{top},
+    			#{leftitem},
+    			#{userid}, 
+    			#{codiname}     
+		)
+	</insert> 
+	 
+	 <select id="getMaxList" parameterType="String" resultType ="int">
+	  select DISTINCT codiname from CODITABLE where userid = #{userid}
+	  order by codiname ASC
+	 
+	 
+	 </select>
+	 <select id="getCodi" resultType="CodiTable">
+	 	select * from CODITABLE
+	 </select>
+	 
+	 <select id="getCodiView" resultType="CodiTable" parameterType="CodiTable">
+	 	select * from CODITABLE where userid=#{userid} and codiname=#{codiname}
+	 </select>
+			
+</mapper>
